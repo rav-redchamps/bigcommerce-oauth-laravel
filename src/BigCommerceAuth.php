@@ -21,11 +21,18 @@ class BigCommerceAuth
     protected string $secret;
 
     /**
+     * App environment
+     * @var string
+     */
+    protected string $environment;
+
+    /**
      * @throws Exception
      */
     public function __construct()
     {
-        if (Config::get('app.env') === 'local') {
+        $this->environment = Config::get('app.env');
+        if ($this->environment === 'local') {
             $this->setClientId(Config::get('bigcommerce-auth.local_client_id'));
             $this->setSecret(Config::get('bigcommerce-auth.local_secret'));
         } else {
@@ -87,15 +94,27 @@ class BigCommerceAuth
      */
     public function install(string $code, string $scope, string $context): array|false
     {
-        $response = Http::post('https://login.bigcommerce.com/oauth2/token', [
-            'client_id' => $this->getClientId(),
-            'client_secret' => $this->getSecret(),
-            'context' => $context,
-            'code' => $code,
-            'grant_type' => 'authorization_code',
-            'redirect_uri' => $this->getRedirectURL(),
-            'scope' => $scope,
-        ]);
+        if ($this->environment === 'local') {
+            $response = Http::withoutVerifying()->post('https://login.bigcommerce.com/oauth2/token', [
+                'client_id' => $this->getClientId(),
+                'client_secret' => $this->getSecret(),
+                'context' => $context,
+                'code' => $code,
+                'grant_type' => 'authorization_code',
+                'redirect_uri' => $this->getRedirectURL(),
+                'scope' => $scope,
+            ]);
+        } else {
+            $response = Http::post('https://login.bigcommerce.com/oauth2/token', [
+                'client_id' => $this->getClientId(),
+                'client_secret' => $this->getSecret(),
+                'context' => $context,
+                'code' => $code,
+                'grant_type' => 'authorization_code',
+                'redirect_uri' => $this->getRedirectURL(),
+                'scope' => $scope,
+            ]);
+        }
 
         if (!$response->ok() && !$response->successful()) return false;
 

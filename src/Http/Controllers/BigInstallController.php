@@ -91,12 +91,12 @@ class BigInstallController extends Controller
         ]);
     }
 
-    private function getUserModelClass(): Model
+    private function getUserModelClass(): string
     {
         return Config::get('auth.providers.user.model');
     }
 
-    private function getStoreModelClass(): Model
+    private function getStoreModelClass(): string
     {
         return Config::get('bigcommerce-auth.models.store_model');
     }
