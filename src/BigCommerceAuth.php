@@ -121,11 +121,12 @@ class BigCommerceAuth
         return json_decode($response->body(), true);
     }
 
+
     /**
-     * @param $signedRequest
+     * @param string $signedRequest
      * @return array|false
      */
-    private function verifySignedPayload($signedRequest): array|false
+    private function verifySignedPayload(string $signedRequest): array|false
     {
         list($encodedData, $encodedSignature) = explode('.', $signedRequest, 2);
 
@@ -139,6 +140,7 @@ class BigCommerceAuth
         if (!hash_equals($expectedSignature, $signature)) {
             return false;
         }
+
         return $data;
     }
 }

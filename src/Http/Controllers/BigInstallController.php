@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
@@ -51,7 +52,7 @@ class BigInstallController extends Controller
      * @param Request $request
      * @return bool
      */
-    protected function saveInformation(Request $request)
+    protected function saveInformation(Request $request): bool
     {
         $response = BigCommerceAuth::install(
             $request->get('code'),
@@ -63,14 +64,17 @@ class BigInstallController extends Controller
             $user = $this->saveUserIfNotExist($response['user']['email']);
             $store = $this->saveStoreIfNotExist($response['context'], $response['access_token']);
             if (isset($user->id) && isset($store->id)) {
-                return $this->assignUserToStore($user->id, $store->id);
+                if ($this->assignUserToStore($user->id, $store->id)) {
+                    Auth::loginUsingId($user->id);
+                    return true;
+                }
             }
         }
 
         return false;
     }
 
-    private function assignUserToStore($user_id, $store_id)
+    private function assignUserToStore($user_id, $store_id): bool
     {
         $store_has_users = Config::get('bigcommerce-auth.tables.store_has_users');
         return DB::table($store_has_users)->updateOrInsert([
