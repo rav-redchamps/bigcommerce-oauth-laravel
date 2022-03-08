@@ -126,7 +126,7 @@ class BigCommerceAuth
      * @param string $signedRequest
      * @return array|false
      */
-    private function verifySignedPayload(string $signedRequest): array|false
+    public function verifySignedPayload(string $signedRequest): array|false
     {
         list($encodedData, $encodedSignature) = explode('.', $signedRequest, 2);
 
