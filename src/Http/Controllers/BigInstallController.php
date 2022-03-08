@@ -49,7 +49,7 @@ class BigInstallController extends Controller
 
         if ($response) {
             $user = $this->saveUserIfNotExist($response['user']['email']);
-            $store = $this->saveStoreIfNotExist($response['context'], $response['access_toke']);
+            $store = $this->saveStoreIfNotExist($response['context'], $response['access_token']);
             if (isset($user->id) && isset($store->id)) {
                 $this->assignUserToStore($user->id, $store->id);
             }
