@@ -77,7 +77,6 @@ class BigInstallController extends Controller
         }
         return $this->getStoreModelClass()::query()->firstOrCreate([
             'hash' => $hash,
-            'access_token' => $access_token,
         ], [
             'hash' => $hash,
             'access_token' => $access_token,
