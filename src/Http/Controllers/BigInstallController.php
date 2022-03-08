@@ -93,7 +93,7 @@ class BigInstallController extends Controller
 
     private function getUserModelClass(): string
     {
-        return Config::get('auth.providers.user.model');
+        return Config::get('auth.providers.users.model');
     }
 
     private function getStoreModelClass(): string
