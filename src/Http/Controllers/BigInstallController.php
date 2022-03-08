@@ -77,10 +77,13 @@ class BigInstallController extends Controller
     private function assignUserToStore($user_id, $store_id): bool
     {
         $store_has_users = Config::get('bigcommerce-auth.tables.store_has_users');
-        return DB::table($store_has_users)->updateOrInsert([
-            'store_id' => $store_id,
-            'user_id' => $user_id,
-        ], [
+        if (DB::table($store_has_users)
+            ->where('store_id', $store_id)
+            ->where('user_id', $user_id)
+            ->exists())
+            return true;
+
+        return DB::table($store_has_users)->insert([
             'store_id' => $store_id,
             'user_id' => $user_id,
         ]);
