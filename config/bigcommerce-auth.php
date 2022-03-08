@@ -62,6 +62,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Redirect path
+    |--------------------------------------------------------------------------
+    |
+    | This redirect path used to redirect after installation of app
+    |
+     */
+    'redirect_path' => env('BC_REDIRECT_PATH'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Installation error page
+    |--------------------------------------------------------------------------
+    |
+    | If you want to show your custom error page replace your view here.
+    | Example: resources/views/errors/install-error.blade.php
+    | ==> view value will be "errors.install-error"
+    |
+     */
+    'error_view' => null,
+
+    /*
+    |--------------------------------------------------------------------------
     | Models
     |--------------------------------------------------------------------------
      */
