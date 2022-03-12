@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
+use MadBoy\BigCommerceAuth\Models\Store;
 
 class BigCommerceAuth
 {
@@ -178,5 +179,26 @@ class BigCommerceAuth
     public function setStoreHash(string $store_hash): void
     {
         Session::put($this->getStoreHashSessionKey(), $store_hash);
+    }
+
+    /**
+     * Get store access token out of the box
+     * Note: you need to set store hash first
+     * @return string|bool
+     * @throws Exception
+     */
+    public function getStoreAccessToken(): string|bool
+    {
+        if (!($store_hash = $this->getStoreHash()))
+            throw new Exception('Store hash is not set. Please set store hash using setStoreHash method.');
+
+        $store = Store::query()
+            ->select(['id', 'hash'])
+            ->where('hash', $store_hash)
+            ->first();
+        if (!$store)
+            return false;
+
+        return (string)$store->hash;
     }
 }
