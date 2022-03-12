@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Response;
 use MadBoy\BigCommerceAuth\Facades\BigCommerceAuth;
+use MadBoy\BigCommerceAuth\Models\Store;
 
 class BigLoadController extends Controller
 {
@@ -36,7 +37,7 @@ class BigLoadController extends Controller
         ]);
     }
 
-    protected function verifyAndLoginUserIfNot(Request $request)
+    protected function verifyAndLoginUserIfNot(Request $request): bool
     {
         $signed_payload = BigCommerceAuth::verifySignedPayload($request->get('signed_payload'));
         if ($signed_payload) {
@@ -46,6 +47,7 @@ class BigLoadController extends Controller
             if ($user) {
                 Auth::login($user);
                 BigCommerceAuth::setStoreHash($signed_payload['store_hash']);
+                BigCommerceAuth::callLoadCallback($user, Store::query()->where('hash', $signed_payload['store_hash'])->first());
                 return true;
             }
         }

@@ -66,6 +66,7 @@ class BigInstallController extends Controller
             if (isset($user->id) && isset($store->id)) {
                 if ($this->assignUserToStore($user->id, $store->id)) {
                     Auth::loginUsingId($user->id);
+                    BigCommerceAuth::callInstallCallback($user, $store);
                     return true;
                 }
             }

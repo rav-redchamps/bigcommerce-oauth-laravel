@@ -2,6 +2,7 @@
 
 namespace MadBoy\BigCommerceAuth;
 
+use Closure;
 use Exception;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
@@ -27,6 +28,10 @@ class BigCommerceAuth
      * @var string
      */
     private string $environment;
+
+    private Closure $installCallback;
+
+    private Closure $loadCallback;
 
     /**
      * @throws Exception
@@ -200,5 +205,45 @@ class BigCommerceAuth
             return false;
 
         return (string)$store->access_token;
+    }
+
+    /**
+     * Set install callback function that will execute after install done
+     * @param Closure $installCallback
+     */
+    public function setInstallCallback(Closure $installCallback): void
+    {
+        $this->installCallback = $installCallback;
+    }
+
+    /**
+     * Set callback function that will execute after load done
+     * @param Closure $loadCallback
+     */
+    public function setLoadCallback(Closure $loadCallback): void
+    {
+        $this->loadCallback = $loadCallback;
+    }
+
+    /**
+     * Execute install callback
+     * @param $user
+     * @param $store
+     */
+    public function callInstallCallback($user, $store)
+    {
+        if (isset($this->installCallback))
+            ($this->installCallback)($user, $store);
+    }
+
+    /**
+     * @param $user
+     * @param $store
+     * @return void
+     */
+    public function callLoadCallback($user, $store)
+    {
+        if (isset($this->loadCallback))
+            ($this->loadCallback)($user, $store);
     }
 }

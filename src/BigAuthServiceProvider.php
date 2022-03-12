@@ -30,7 +30,7 @@ class BigAuthServiceProvider extends PackageServiceProvider
     {
         parent::register();
 
-        $this->app->bind('bigcommerce-auth', function () {
+        $this->app->singleton('bigcommerce-auth', function () {
             return new BigCommerceAuth();
         });
 
