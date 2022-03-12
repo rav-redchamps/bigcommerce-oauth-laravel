@@ -96,9 +96,15 @@ class BigInstallController extends Controller
         if (!$hash) {
             throw new HttpException(500, 'Store hash does not found in context!');
         }
-        return $this->getStoreModelClass()::query()->firstOrCreate([
-            'hash' => $hash,
-        ], [
+        $store = $this->getStoreModelClass()::query()
+            ->where('hash', $hash)
+            ->first();
+        if ($store) {
+            $store->access_token = $access_token;
+            $store->save();
+            return $store;
+        }
+        return $this->getStoreModelClass()::query()->create([
             'hash' => $hash,
             'access_token' => $access_token,
         ]);
