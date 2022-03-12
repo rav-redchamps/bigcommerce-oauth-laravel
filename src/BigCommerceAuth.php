@@ -199,6 +199,6 @@ class BigCommerceAuth
         if (!$store)
             return false;
 
-        return (string)$store->hash;
+        return (string)$store->access_token;
     }
 }
