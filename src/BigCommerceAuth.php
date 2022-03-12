@@ -5,6 +5,7 @@ namespace MadBoy\BigCommerceAuth;
 use Exception;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Session;
 
 class BigCommerceAuth
 {
@@ -90,6 +91,15 @@ class BigCommerceAuth
     }
 
     /**
+     * Get session key from config
+     * @return string
+     */
+    private function getSessionKey(): string
+    {
+        return Config::get('bigcommerce-auth.session_key', 'bigcommerce-auth');
+    }
+
+    /**
      * @throws Exception
      */
     public function install(string $code, string $scope, string $context): array|false
@@ -141,5 +151,23 @@ class BigCommerceAuth
         }
 
         return $data;
+    }
+
+    /**
+     * Get BigCommerce user requested store hash
+     * @return string|false
+     */
+    public function getStoreHash(): string|false
+    {
+        return Session::get($this->getSessionKey(), false);
+    }
+
+    /**
+     * Save BigCommerce user requested store hash in session
+     * @param string $store_hash
+     */
+    public function setStoreHash(string $store_hash): void
+    {
+        Session::put($this->getSessionKey(), $store_hash);
     }
 }

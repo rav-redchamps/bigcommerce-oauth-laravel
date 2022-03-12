@@ -45,6 +45,7 @@ class BigLoadController extends Controller
                 ->first();
             if ($user) {
                 Auth::login($user);
+                BigCommerceAuth::setStoreHash($signed_payload['store_hash']);
                 return true;
             }
         }
