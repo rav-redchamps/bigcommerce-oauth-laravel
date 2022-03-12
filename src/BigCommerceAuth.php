@@ -193,12 +193,12 @@ class BigCommerceAuth
             throw new Exception('Store hash is not set. Please set store hash using setStoreHash method.');
 
         $store = Store::query()
-            ->select(['id', 'hash'])
+            ->select(['id', 'access_token'])
             ->where('hash', $store_hash)
             ->first();
         if (!$store)
             return false;
 
-        return (string)$store->hash;
+        return (string)$store->access_token;
     }
 }
