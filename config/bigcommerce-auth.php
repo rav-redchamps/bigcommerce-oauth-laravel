@@ -78,7 +78,7 @@ return [
     | This redirect path used to redirect after installation of app
     |
      */
-    'session_key' => 'bigcommerce-auth',
+    'session_key' => 'bigcommerce_auth',
 
     /*
     |--------------------------------------------------------------------------

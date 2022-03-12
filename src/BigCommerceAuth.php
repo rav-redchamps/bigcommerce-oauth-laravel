@@ -96,7 +96,16 @@ class BigCommerceAuth
      */
     private function getSessionKey(): string
     {
-        return Config::get('bigcommerce-auth.session_key', 'bigcommerce-auth');
+        return Config::get('bigcommerce-auth.session_key', 'bigcommerce_auth');
+    }
+
+    /**
+     * Get store hash session key
+     * @return string
+     */
+    private function getStoreHashSessionKey(): string
+    {
+        return $this->getSessionKey() . '.store_hash_' . sha1(static::class);
     }
 
     /**
@@ -159,7 +168,7 @@ class BigCommerceAuth
      */
     public function getStoreHash(): string|false
     {
-        return Session::get($this->getSessionKey(), false);
+        return Session::get($this->getStoreHashSessionKey(), false);
     }
 
     /**
@@ -168,6 +177,6 @@ class BigCommerceAuth
      */
     public function setStoreHash(string $store_hash): void
     {
-        Session::put($this->getSessionKey(), $store_hash);
+        Session::put($this->getStoreHashSessionKey(), $store_hash);
     }
 }
