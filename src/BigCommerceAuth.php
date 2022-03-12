@@ -12,19 +12,19 @@ class BigCommerceAuth
      * BigCommerce App client_id
      * @var string
      */
-    protected string $client_id;
+    private string $client_id;
 
     /**
      * BigCommerce App secret
      * @var string
      */
-    protected string $secret;
+    private string $secret;
 
     /**
      * App environment
      * @var string
      */
-    protected string $environment;
+    private string $environment;
 
     /**
      * @throws Exception
@@ -48,7 +48,7 @@ class BigCommerceAuth
     /**
      * @return string
      */
-    public function getClientId(): string
+    private function getClientId(): string
     {
         return $this->client_id;
     }
@@ -56,7 +56,7 @@ class BigCommerceAuth
     /**
      * @param string $client_id
      */
-    public function setClientId(mixed $client_id): void
+    private function setClientId(mixed $client_id): void
     {
         $this->client_id = $client_id;
     }
@@ -64,7 +64,7 @@ class BigCommerceAuth
     /**
      * @return string
      */
-    public function getSecret(): string
+    private function getSecret(): string
     {
         return $this->secret;
     }
@@ -72,7 +72,7 @@ class BigCommerceAuth
     /**
      * @param string $secret
      */
-    public function setSecret(mixed $secret): void
+    private function setSecret(mixed $secret): void
     {
         $this->secret = $secret;
     }
@@ -80,7 +80,7 @@ class BigCommerceAuth
     /**
      * @throws Exception
      */
-    public function getRedirectURL(): string
+    private function getRedirectURL(): string
     {
         $redirect_url = Config::get('bigcommerce-auth.redirect_url');
         if (!$redirect_url) {
@@ -120,7 +120,6 @@ class BigCommerceAuth
 
         return json_decode($response->body(), true);
     }
-
 
     /**
      * @param string $signedRequest
