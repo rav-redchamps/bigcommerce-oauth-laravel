@@ -47,7 +47,8 @@ class BigLoadController extends Controller
             if ($user) {
                 Auth::login($user);
                 BigCommerceAuth::setStoreHash($signed_payload['store_hash']);
-                BigCommerceAuth::callLoadCallback($user, Store::query()->where('hash', $signed_payload['store_hash'])->first());
+                $store = $this->getStoreModelClass()::query()->where('hash', $signed_payload['store_hash'])->first();
+                BigCommerceAuth::callLoadCallback($user, $store);
                 return true;
             }
         }
@@ -57,5 +58,10 @@ class BigLoadController extends Controller
     private function getUserModelClass(): string
     {
         return Config::get('auth.providers.users.model');
+    }
+
+    private function getStoreModelClass(): string
+    {
+        return Config::get('bigcommerce-auth.models.store_model');
     }
 }
