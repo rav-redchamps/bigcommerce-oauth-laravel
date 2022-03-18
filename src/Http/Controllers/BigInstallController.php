@@ -2,6 +2,7 @@
 
 namespace MadBoy\BigCommerceAuth\Http\Controllers;
 
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\RedirectResponse;
@@ -65,7 +66,8 @@ class BigInstallController extends Controller
             $store = $this->saveStoreIfNotExist($response['context'], $response['access_token']);
             if (isset($user->id) && isset($store->id)) {
                 if ($this->assignUserToStore($user->id, $store->id)) {
-                    Auth::loginUsingId($user->id);
+                    Auth::login($user);
+                    BigCommerceAuth::setStoreHash($store->hash);
                     BigCommerceAuth::callInstallCallback($user, $store);
                     BigCommerceAuth::callLoadCallback($user, $store);
                     return true;
@@ -112,7 +114,11 @@ class BigInstallController extends Controller
         ]);
     }
 
-    private function saveUserIfNotExist($email): Model|Builder
+    /**
+     * @param $email
+     * @return Model|Builder|Authenticatable
+     */
+    private function saveUserIfNotExist($email)
     {
         return $this->getUserModelClass()::query()->firstOrCreate([
             'email' => $email
