@@ -133,4 +133,29 @@ return [
         'store_has_users' => 'store_has_users',
 
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Auth Controllers
+    |--------------------------------------------------------------------------
+     */
+    'controllers' => [
+
+        /*
+        |--------------------------------------------------------------------------
+        | Big Commerce Load API call controller
+        |--------------------------------------------------------------------------
+        |
+         */
+        'load' => \MadBoy\BigCommerceAuth\Http\Controllers\BigLoadController::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Big Commerce Install API call controller
+        |--------------------------------------------------------------------------
+        |
+         */
+        'install' => \MadBoy\BigCommerceAuth\Http\Controllers\BigInstallController::class,
+
+    ],
 ];
