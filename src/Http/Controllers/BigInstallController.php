@@ -78,7 +78,7 @@ class BigInstallController extends Controller
         return false;
     }
 
-    private function assignUserToStore($user_id, $store_id): bool
+    protected function assignUserToStore($user_id, $store_id): bool
     {
         $store_has_users = Config::get('bigcommerce-auth.tables.store_has_users');
         if (DB::table($store_has_users)
@@ -93,7 +93,7 @@ class BigInstallController extends Controller
         ]);
     }
 
-    private function saveStoreIfNotExist(string $context, string $access_token): Model|Builder
+    protected function saveStoreIfNotExist(string $context, string $access_token): Model|Builder
     {
         $hash = explode('/', $context);
         $hash = $hash[1] ?? false;
@@ -118,19 +118,19 @@ class BigInstallController extends Controller
      * @param $email
      * @return Model|Builder|Authenticatable
      */
-    private function saveUserIfNotExist($email)
+    protected function saveUserIfNotExist($email)
     {
         return $this->getUserModelClass()::query()->firstOrCreate([
             'email' => $email
         ]);
     }
 
-    private function getUserModelClass(): string
+    protected function getUserModelClass(): string
     {
         return Config::get('auth.providers.users.model');
     }
 
-    private function getStoreModelClass(): string
+    protected function getStoreModelClass(): string
     {
         return Config::get('bigcommerce-auth.models.store_model');
     }

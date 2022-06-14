@@ -78,14 +78,14 @@ class BigLoadController extends Controller
      * @param $email
      * @return Model|Builder|Authenticatable
      */
-    private function saveUserIfNotExist($email)
+    protected function saveUserIfNotExist($email)
     {
         return $this->getUserModelClass()::query()->firstOrCreate([
             'email' => $email
         ]);
     }
 
-    private function assignUserToStore($user_id, $store_id): bool
+    protected function assignUserToStore($user_id, $store_id): bool
     {
         $store_has_users = Config::get('bigcommerce-auth.tables.store_has_users');
         if (DB::table($store_has_users)
@@ -100,12 +100,12 @@ class BigLoadController extends Controller
         ]);
     }
 
-    private function getUserModelClass(): string
+    protected function getUserModelClass(): string
     {
         return Config::get('auth.providers.users.model');
     }
 
-    private function getStoreModelClass(): string
+    protected function getStoreModelClass(): string
     {
         return Config::get('bigcommerce-auth.models.store_model');
     }
