@@ -7,8 +7,10 @@ Route::group([
     'prefix' => 'auth'
 ], function () {
 
-    Route::get('install', [Config::get('bigcommerce-auth.controllers.install'), 'install']);
+    Route::get('install', [Config::get('bigcommerce-auth.controllers.install'), 'install'])
+        ->name('bigcommerce-install');
 
-    Route::get('load', [Config::get('bigcommerce-auth.controllers.load'), 'load']);
+    Route::get('load', [Config::get('bigcommerce-auth.controllers.load'), 'load'])
+        ->name('bigcommerce-load');
 
 });
