@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
+use MadBoy\BigCommerceAuth\BigAuthHelper;
 use MadBoy\BigCommerceAuth\Facades\BigCommerceAuth;
-use MadBoy\BigCommerceAuth\Models\Store;
 
 class BigLoadController extends Controller
 {
@@ -45,7 +45,7 @@ class BigLoadController extends Controller
     {
         $signed_payload = BigCommerceAuth::verifySignedPayload($request->get('signed_payload'));
         if ($signed_payload) {
-            $user = $this->getUserModelClass()::query()
+            $user = BigAuthHelper::getUserModelClass()::query()
                 ->where('email', $signed_payload['user']['email'])
                 ->first();
             if (!$user) {
@@ -53,7 +53,7 @@ class BigLoadController extends Controller
                 if (!$user) {
                     return false;
                 }
-                $store = $this->getStoreModelClass()::query()
+                $store = BigAuthHelper::getStoreModelClass()::query()
                     ->where('hash', $signed_payload['store_hash'])
                     ->first();
                 if (!$store) {
@@ -65,7 +65,7 @@ class BigLoadController extends Controller
             }
             Auth::login($user);
             BigCommerceAuth::setStoreHash($signed_payload['store_hash']);
-            $store = $this->getStoreModelClass()::query()
+            $store = BigAuthHelper::getStoreModelClass()::query()
                 ->where('hash', $signed_payload['store_hash'])
                 ->first();
             BigCommerceAuth::callLoadCallback($user, $store);
@@ -80,7 +80,7 @@ class BigLoadController extends Controller
      */
     protected function saveUserIfNotExist($email)
     {
-        return $this->getUserModelClass()::query()->firstOrCreate([
+        return BigAuthHelper::getUserModelClass()::query()->firstOrCreate([
             'email' => $email
         ]);
     }
@@ -98,15 +98,5 @@ class BigLoadController extends Controller
             'store_id' => $store_id,
             'user_id' => $user_id,
         ]);
-    }
-
-    protected function getUserModelClass(): string
-    {
-        return Config::get('auth.providers.users.model');
-    }
-
-    protected function getStoreModelClass(): string
-    {
-        return Config::get('bigcommerce-auth.models.store_model');
     }
 }
