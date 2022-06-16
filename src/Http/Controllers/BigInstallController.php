@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-use MadBoy\BigCommerceAuth\BigAuthHelper;
 use MadBoy\BigCommerceAuth\Facades\BigCommerceAuth;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -65,7 +65,7 @@ class BigInstallController extends Controller
             $user = $this->saveUserIfNotExist($response['user']['email']);
             $store = $this->saveStoreIfNotExist($response['context'], $response['access_token']);
             if (isset($user->id) && isset($store->id)) {
-                if (BigAuthHelper::assignUserToStore($user->id, $store->id)) {
+                if ($this->assignUserToStore($user->id, $store->id)) {
                     Auth::login($user);
                     BigCommerceAuth::setStoreHash($store->hash);
                     BigCommerceAuth::callInstallCallback($user, $store);
@@ -78,6 +78,21 @@ class BigInstallController extends Controller
         return false;
     }
 
+    protected function assignUserToStore($user_id, $store_id): bool
+    {
+        $store_has_users = Config::get('bigcommerce-auth.tables.store_has_users');
+        if (DB::table($store_has_users)
+            ->where('store_id', $store_id)
+            ->where('user_id', $user_id)
+            ->exists())
+            return true;
+
+        return DB::table($store_has_users)->insert([
+            'store_id' => $store_id,
+            'user_id' => $user_id,
+        ]);
+    }
+
     protected function saveStoreIfNotExist(string $context, string $access_token): Model|Builder
     {
         $hash = explode('/', $context);
@@ -85,7 +100,7 @@ class BigInstallController extends Controller
         if (!$hash) {
             throw new HttpException(500, 'Store hash does not found in context!');
         }
-        $store = BigAuthHelper::getStoreModelClass()::query()
+        $store = $this->getStoreModelClass()::query()
             ->where('hash', $hash)
             ->first();
         if ($store) {
@@ -93,7 +108,7 @@ class BigInstallController extends Controller
             $store->save();
             return $store;
         }
-        return BigAuthHelper::getStoreModelClass()::query()->create([
+        return $this->getStoreModelClass()::query()->create([
             'hash' => $hash,
             'access_token' => $access_token,
         ]);
@@ -105,8 +120,18 @@ class BigInstallController extends Controller
      */
     protected function saveUserIfNotExist($email)
     {
-        return BigAuthHelper::getUserModelClass()::query()->firstOrCreate([
+        return $this->getUserModelClass()::query()->firstOrCreate([
             'email' => $email
         ]);
+    }
+
+    protected function getUserModelClass(): string
+    {
+        return Config::get('auth.providers.users.model');
+    }
+
+    protected function getStoreModelClass(): string
+    {
+        return Config::get('bigcommerce-auth.models.store_model');
     }
 }
