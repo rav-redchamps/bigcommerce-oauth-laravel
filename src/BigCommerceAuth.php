@@ -33,6 +33,8 @@ class BigCommerceAuth
 
     private Closure $loadCallback;
 
+    private ?Closure $getStoreAccessTokenCallback;
+
     /**
      * @throws Exception
      */
@@ -197,6 +199,10 @@ class BigCommerceAuth
         if (!($store_hash = $this->getStoreHash()))
             throw new Exception('Store hash is not set. Please set store hash using setStoreHash method.');
 
+        if ($this->getGetStoreAccessTokenCallback() != null) {
+            return ($this->getGetStoreAccessTokenCallback())($store_hash);
+        }
+
         $store = Store::query()
             ->select(['id', 'access_token'])
             ->where('hash', $store_hash)
@@ -245,5 +251,21 @@ class BigCommerceAuth
     {
         if (isset($this->loadCallback))
             ($this->loadCallback)($user, $store);
+    }
+
+    /**
+     * @return Closure|null
+     */
+    public function getGetStoreAccessTokenCallback(): ?Closure
+    {
+        return $this->getStoreAccessTokenCallback;
+    }
+
+    /**
+     * @param Closure $getStoreAccessTokenCallback
+     */
+    public function setGetStoreAccessTokenCallback(Closure $getStoreAccessTokenCallback): void
+    {
+        $this->getStoreAccessTokenCallback = $getStoreAccessTokenCallback;
     }
 }
