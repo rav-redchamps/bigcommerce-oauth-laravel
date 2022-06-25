@@ -157,5 +157,21 @@ return [
          */
         'install' => \MadBoy\BigCommerceAuth\Http\Controllers\BigInstallController::class,
 
+        /*
+        |--------------------------------------------------------------------------
+        | Big Commerce Uninstall API call controller
+        |--------------------------------------------------------------------------
+        |
+         */
+        'uninstall' => \MadBoy\BigCommerceAuth\Http\Controllers\BigUninstallController::class,
+
+        /*
+        |--------------------------------------------------------------------------
+        | Big Commerce Uninstall API call controller
+        |--------------------------------------------------------------------------
+        |
+         */
+        'remove_user' => \MadBoy\BigCommerceAuth\Http\Controllers\BigRemoveUserController::class,
+
     ],
 ];

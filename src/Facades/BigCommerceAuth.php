@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static void callInstallCallback($user, $store)
  * @method static void callLoadCallback($user, $store)
  * @method static void setGetStoreAccessTokenCallback(Closure $getStoreAccessTokenCallback)
+ * @method static bool|Closure getUninstallStoreCallBack()
+ * @method static void setUninstallStoreCallBack(Closure $uninstallStoreCallBack)
+ * @method static bool|Closure getRemoveStoreUserCallBack()
+ * @method static void setRemoveStoreUserCallBack(Closure $removeStoreUserCallBack)
  *
  * @see \MadBoy\BigCommerceAuth\BigCommerceAuth
  */

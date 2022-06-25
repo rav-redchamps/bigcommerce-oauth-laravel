@@ -35,6 +35,10 @@ class BigCommerceAuth
 
     private ?Closure $getStoreAccessTokenCallback;
 
+    private Closure $uninstallStoreCallBack;
+
+    private Closure $removeStoreUserCallBack;
+
     /**
      * @throws Exception
      */
@@ -267,5 +271,37 @@ class BigCommerceAuth
     public function setGetStoreAccessTokenCallback(Closure $getStoreAccessTokenCallback): void
     {
         $this->getStoreAccessTokenCallback = $getStoreAccessTokenCallback;
+    }
+
+    /**
+     * @return Closure|false
+     */
+    public function getUninstallStoreCallBack(): bool|Closure
+    {
+        return $this->uninstallStoreCallBack ?? false;
+    }
+
+    /**
+     * @param Closure $uninstallStoreCallBack
+     */
+    public function setUninstallStoreCallBack(Closure $uninstallStoreCallBack): void
+    {
+        $this->uninstallStoreCallBack = $uninstallStoreCallBack;
+    }
+
+    /**
+     * @return Closure|false
+     */
+    public function getRemoveStoreUserCallBack(): bool|Closure
+    {
+        return $this->removeStoreUserCallBack ?? false;
+    }
+
+    /**
+     * @param Closure $removeStoreUserCallBack
+     */
+    public function setRemoveStoreUserCallBack(Closure $removeStoreUserCallBack): void
+    {
+        $this->removeStoreUserCallBack = $removeStoreUserCallBack;
     }
 }
