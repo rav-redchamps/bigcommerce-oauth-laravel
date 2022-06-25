@@ -14,10 +14,15 @@ class BigRemoveUserController extends Controller
 
         $validatedSignedPayload = $this->verifySignedPayload($request);
 
+        $this->removeUserData($validatedSignedPayload);
+    }
+
+    protected function removeUserData($signedPayload)
+    {
         $removeStoreUserCallBack = BigCommerceAuth::getRemoveStoreUserCallBack();
 
-        if ($validatedSignedPayload && $removeStoreUserCallBack) {
-            $removeStoreUserCallBack();
+        if ($signedPayload && $removeStoreUserCallBack) {
+            $removeStoreUserCallBack($signedPayload);
         }
     }
 

@@ -21,6 +21,15 @@ class BigUninstallController extends Controller
         }
     }
 
+    protected function removeStoreData($signedPayload)
+    {
+        $uninstallCallback = BigCommerceAuth::getUninstallStoreCallBack();
+
+        if ($signedPayload && $uninstallCallback) {
+            $uninstallCallback($signedPayload);
+        }
+    }
+
     /**
      * Validate Parameters
      * @param Request $request
