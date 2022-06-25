@@ -4,6 +4,7 @@ namespace MadBoy\BigCommerceAuth;
 
 use Closure;
 use Exception;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
@@ -23,12 +24,6 @@ class BigCommerceAuth
      */
     private string $secret;
 
-    /**
-     * App environment
-     * @var string
-     */
-    private string $environment;
-
     private Closure $installCallback;
 
     private Closure $loadCallback;
@@ -44,13 +39,12 @@ class BigCommerceAuth
      */
     public function __construct()
     {
-        $this->environment = Config::get('app.env');
-        if ($this->environment === 'local') {
-            $this->setClientId(Config::get('bigcommerce-auth.local_client_id'));
-            $this->setSecret(Config::get('bigcommerce-auth.local_secret'));
-        } else {
+        if (App::isProduction()) {
             $this->setClientId(Config::get('bigcommerce-auth.client_id'));
             $this->setSecret(Config::get('bigcommerce-auth.secret'));
+        } else {
+            $this->setClientId(Config::get('bigcommerce-auth.local_client_id'));
+            $this->setSecret(Config::get('bigcommerce-auth.local_secret'));
         }
         if ($this->getClientId() == null)
             throw new Exception('BC_CLIENT_ID not set. Please set client id first.');
@@ -125,8 +119,8 @@ class BigCommerceAuth
      */
     public function install(string $code, string $scope, string $context): array|false
     {
-        if ($this->environment === 'local') {
-            $response = Http::withoutVerifying()->post('https://login.bigcommerce.com/oauth2/token', [
+        if (App::isProduction()) {
+            $response = Http::post('https://login.bigcommerce.com/oauth2/token', [
                 'client_id' => $this->getClientId(),
                 'client_secret' => $this->getSecret(),
                 'context' => $context,
@@ -136,7 +130,7 @@ class BigCommerceAuth
                 'scope' => $scope,
             ]);
         } else {
-            $response = Http::post('https://login.bigcommerce.com/oauth2/token', [
+            $response = Http::withoutVerifying()->post('https://login.bigcommerce.com/oauth2/token', [
                 'client_id' => $this->getClientId(),
                 'client_secret' => $this->getSecret(),
                 'context' => $context,
