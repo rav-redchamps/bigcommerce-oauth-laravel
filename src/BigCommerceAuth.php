@@ -28,9 +28,9 @@ class BigCommerceAuth
     private function getClientId(): string
     {
         if (App::isProduction()) {
-            return Config::get('bigcommerce-auth.client_id');
+            return Config::get('bigcommerce-auth.client_id', '');
         } else {
-            return Config::get('bigcommerce-auth.local_client_id');
+            return Config::get('bigcommerce-auth.local_client_id', '');
         }
     }
 
@@ -40,9 +40,9 @@ class BigCommerceAuth
     private function getSecret(): string
     {
         if (App::isProduction()) {
-            return Config::get('bigcommerce-auth.secret_id');
+            return Config::get('bigcommerce-auth.secret_id', '');
         } else {
-            return Config::get('bigcommerce-auth.local_secret_id');
+            return Config::get('bigcommerce-auth.local_secret_id', '');
         }
     }
 
