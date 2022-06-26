@@ -40,9 +40,9 @@ class BigCommerceAuth
     private function getSecret(): string
     {
         if (App::isProduction()) {
-            return Config::get('bigcommerce-auth.secret_id', '');
+            return Config::get('bigcommerce-auth.secret', '');
         } else {
-            return Config::get('bigcommerce-auth.local_secret_id', '');
+            return Config::get('bigcommerce-auth.local_secret', '');
         }
     }
 
