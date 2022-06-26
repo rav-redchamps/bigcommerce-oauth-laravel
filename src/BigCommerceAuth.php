@@ -4,6 +4,8 @@ namespace MadBoy\BigCommerceAuth;
 
 use Closure;
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
@@ -21,6 +23,8 @@ class BigCommerceAuth
     private Closure $uninstallStoreCallBack;
 
     private Closure $removeStoreUserCallBack;
+
+    private Closure $findStoreFromSessionCallBack;
 
     /**
      * @return string
@@ -259,5 +263,45 @@ class BigCommerceAuth
     public function setRemoveStoreUserCallBack(Closure $removeStoreUserCallBack): void
     {
         $this->removeStoreUserCallBack = $removeStoreUserCallBack;
+    }
+
+    /**
+     * @return Closure|false
+     */
+    public function getFindStoreFromSessionCallBack(): bool|Closure
+    {
+        return $this->findStoreFromSessionCallBack ?? false;
+    }
+
+    /**
+     * @param Closure $findStoreFromSessionCallBack
+     */
+    public function setFindStoreFromSessionCallBack(Closure $findStoreFromSessionCallBack): void
+    {
+        $this->findStoreFromSessionCallBack = $findStoreFromSessionCallBack;
+    }
+
+    /**
+     * @return Model|Builder
+     */
+    protected function findStore(): Model|Builder
+    {
+        return (Config::get('bigcommerce-auth.models.store_model', Store::class))::query()
+            ->where('hash', $this->getStoreHash())
+            ->firstOrFail();
+    }
+
+    /**
+     * Get store object from session
+     * @return Model|Builder
+     */
+    public function store():  Model|Builder
+    {
+        $findCallBack = $this->getFindStoreFromSessionCallBack();
+        if ($findCallBack) {
+            return $findCallBack();
+        }
+
+        return $this->findStore();
     }
 }

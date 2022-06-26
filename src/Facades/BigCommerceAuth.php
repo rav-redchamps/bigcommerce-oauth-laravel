@@ -3,7 +3,10 @@
 namespace MadBoy\BigCommerceAuth\Facades;
 
 use Closure;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
+use MadBoy\BigCommerceAuth\Models\Store;
 
 /**
  * @method static array|false install(string $code, string $scope, string $context)
@@ -20,6 +23,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static void setUninstallStoreCallBack(Closure $uninstallStoreCallBack)
  * @method static bool|Closure getRemoveStoreUserCallBack()
  * @method static void setRemoveStoreUserCallBack(Closure $removeStoreUserCallBack)
+ * @method static void setFindStoreFromSessionCallBack(Closure $findStoreFromSessionCallBack)
+ * @method static Model|Builder|Store store()
  *
  * @see \MadBoy\BigCommerceAuth\BigCommerceAuth
  */
