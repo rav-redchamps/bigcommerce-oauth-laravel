@@ -12,18 +12,6 @@ use MadBoy\BigCommerceAuth\Models\Store;
 
 class BigCommerceAuth
 {
-    /**
-     * BigCommerce App client_id
-     * @var string
-     */
-    private string $client_id;
-
-    /**
-     * BigCommerce App secret
-     * @var string
-     */
-    private string $secret;
-
     private Closure $installCallback;
 
     private Closure $loadCallback;
@@ -35,37 +23,15 @@ class BigCommerceAuth
     private Closure $removeStoreUserCallBack;
 
     /**
-     * @throws Exception
-     */
-    public function __construct()
-    {
-        if (App::isProduction()) {
-            $this->setClientId(Config::get('bigcommerce-auth.client_id'));
-            $this->setSecret(Config::get('bigcommerce-auth.secret'));
-        } else {
-            $this->setClientId(Config::get('bigcommerce-auth.local_client_id'));
-            $this->setSecret(Config::get('bigcommerce-auth.local_secret'));
-        }
-        if ($this->getClientId() == null)
-            throw new Exception('BC_CLIENT_ID not set. Please set client id first.');
-        if ($this->getSecret() == null)
-            throw new Exception('BC_SECRET not set. Please set secret first.');
-    }
-
-    /**
      * @return string
      */
     private function getClientId(): string
     {
-        return $this->client_id;
-    }
-
-    /**
-     * @param string $client_id
-     */
-    private function setClientId(mixed $client_id): void
-    {
-        $this->client_id = $client_id;
+        if (App::isProduction()) {
+            return Config::get('bigcommerce-auth.client_id');
+        } else {
+            return Config::get('bigcommerce-auth.local_client_id');
+        }
     }
 
     /**
@@ -73,15 +39,11 @@ class BigCommerceAuth
      */
     private function getSecret(): string
     {
-        return $this->secret;
-    }
-
-    /**
-     * @param string $secret
-     */
-    private function setSecret(mixed $secret): void
-    {
-        $this->secret = $secret;
+        if (App::isProduction()) {
+            return Config::get('bigcommerce-auth.secret_id');
+        } else {
+            return Config::get('bigcommerce-auth.local_secret_id');
+        }
     }
 
     /**
