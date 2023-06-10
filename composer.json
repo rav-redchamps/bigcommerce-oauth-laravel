@@ -1,34 +1,39 @@
 {
-  "name": "madboy-developers/bigcommerce-oauth-laravel",
-  "description": "BigCommerce App authentication made easy.",
-  "minimum-stability": "stable",
-  "license": "proprietary",
-  "authors": [
-    {
-      "name": "Hardik Modha",
-      "email": "hardik@madboydevelopers.com"
+    "name": "cronixweb/bigcommerce-oauth-laravel",
+    "description": "BigCommerce App authentication made easy.",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Amandeep Singh",
+            "email": "aman@cronixweb.com"
+        },
+        {
+            "name": "Hardik Modha",
+            "email": "hardik@technopers.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "ext-json": "*",
+        "spatie/laravel-package-tools": "^1.11.2",
+        "illuminate/database": "^9.0",
+        "illuminate/http": "^9.0",
+        "illuminate/routing": "^9.0",
+        "illuminate/support": "^9.0",
+        "doctrine/dbal": "^2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "CronixWeb\\BigCommerceAuth\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "CronixWeb\\BigCommerceAuth\\BigAuthServiceProvider"
+            ]
+        }
     }
-  ],
-  "require": {
-    "php": "^8.0",
-    "ext-json": "*",
-    "spatie/laravel-package-tools": "^1.11.2",
-    "illuminate/database": "^9.0",
-    "illuminate/http": "^9.0",
-    "illuminate/routing": "^9.0",
-    "illuminate/support": "^9.0",
-    "doctrine/dbal": "^2.5"
-  },
-  "autoload": {
-    "psr-4": {
-      "MadBoy\\BigCommerceAuth\\": "src/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "MadBoy\\BigCommerceAuth\\BigAuthServiceProvider"
-      ]
-    }
-  }
 }

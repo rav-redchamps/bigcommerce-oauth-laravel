@@ -1,6 +1,6 @@
 <?php
 
-namespace MadBoy\BigCommerceAuth;
+namespace CronixWeb\BigCommerceAuth;
 
 use Spatie\LaravelPackageTools\Exceptions\InvalidPackage;
 use Spatie\LaravelPackageTools\Package;

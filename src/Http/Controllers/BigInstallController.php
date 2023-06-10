@@ -1,6 +1,6 @@
 <?php
 
-namespace MadBoy\BigCommerceAuth\Http\Controllers;
+namespace CronixWeb\BigCommerceAuth\Http\Controllers;
 
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Response;
-use MadBoy\BigCommerceAuth\Facades\BigCommerceAuth;
+use CronixWeb\BigCommerceAuth\Facades\BigCommerceAuth;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class BigInstallController extends Controller

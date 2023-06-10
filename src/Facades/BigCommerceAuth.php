@@ -1,12 +1,12 @@
 <?php
 
-namespace MadBoy\BigCommerceAuth\Facades;
+namespace CronixWeb\BigCommerceAuth\Facades;
 
 use Closure;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Facade;
-use MadBoy\BigCommerceAuth\Models\Store;
+use CronixWeb\BigCommerceAuth\Models\Store;
 
 /**
  * @method static array|false install(string $code, string $scope, string $context)
@@ -26,7 +26,7 @@ use MadBoy\BigCommerceAuth\Models\Store;
  * @method static void setFindStoreFromSessionCallBack(Closure $findStoreFromSessionCallBack)
  * @method static Model|Builder|Store store()
  *
- * @see \MadBoy\BigCommerceAuth\BigCommerceAuth
+ * @see \CronixWeb\BigCommerceAuth\BigCommerceAuth
  */
 class BigCommerceAuth extends Facade
 {

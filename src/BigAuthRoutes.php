@@ -1,6 +1,6 @@
 <?php
 
-namespace MadBoy\BigCommerceAuth;
+namespace CronixWeb\BigCommerceAuth;
 
 class BigAuthRoutes
 {

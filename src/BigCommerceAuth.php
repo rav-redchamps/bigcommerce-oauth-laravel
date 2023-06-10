@@ -1,6 +1,6 @@
 <?php
 
-namespace MadBoy\BigCommerceAuth;
+namespace CronixWeb\BigCommerceAuth;
 
 use Closure;
 use Exception;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
-use MadBoy\BigCommerceAuth\Models\Store;
+use CronixWeb\BigCommerceAuth\Models\Store;
 
 class BigCommerceAuth
 {

@@ -105,7 +105,7 @@ return [
         |--------------------------------------------------------------------------
         |
          */
-        'store_model' => \MadBoy\BigCommerceAuth\Models\Store::class,
+        'store_model' => \CronixWeb\BigCommerceAuth\Models\Store::class,
 
     ],
 
@@ -147,7 +147,7 @@ return [
         |--------------------------------------------------------------------------
         |
          */
-        'load' => \MadBoy\BigCommerceAuth\Http\Controllers\BigLoadController::class,
+        'load' => \CronixWeb\BigCommerceAuth\Http\Controllers\BigLoadController::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -155,7 +155,7 @@ return [
         |--------------------------------------------------------------------------
         |
          */
-        'install' => \MadBoy\BigCommerceAuth\Http\Controllers\BigInstallController::class,
+        'install' => \CronixWeb\BigCommerceAuth\Http\Controllers\BigInstallController::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -163,7 +163,7 @@ return [
         |--------------------------------------------------------------------------
         |
          */
-        'uninstall' => \MadBoy\BigCommerceAuth\Http\Controllers\BigUninstallController::class,
+        'uninstall' => \CronixWeb\BigCommerceAuth\Http\Controllers\BigUninstallController::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -171,7 +171,7 @@ return [
         |--------------------------------------------------------------------------
         |
          */
-        'remove_user' => \MadBoy\BigCommerceAuth\Http\Controllers\BigRemoveUserController::class,
+        'remove_user' => \CronixWeb\BigCommerceAuth\Http\Controllers\BigRemoveUserController::class,
 
     ],
 ];

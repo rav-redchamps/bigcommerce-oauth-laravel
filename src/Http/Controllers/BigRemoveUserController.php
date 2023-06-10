@@ -1,10 +1,10 @@
 <?php
 
-namespace MadBoy\BigCommerceAuth\Http\Controllers;
+namespace CronixWeb\BigCommerceAuth\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use MadBoy\BigCommerceAuth\Facades\BigCommerceAuth;
+use CronixWeb\BigCommerceAuth\Facades\BigCommerceAuth;
 
 class BigRemoveUserController extends Controller
 {

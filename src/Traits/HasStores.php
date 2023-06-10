@@ -1,9 +1,9 @@
 <?php
 
-namespace MadBoy\BigCommerceAuth\Traits;
+namespace CronixWeb\BigCommerceAuth\Traits;
 
 use Illuminate\Support\Facades\Config;
-use MadBoy\BigCommerceAuth\Models\Store;
+use CronixWeb\BigCommerceAuth\Models\Store;
 
 trait HasStores
 {
