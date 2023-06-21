@@ -90,6 +90,8 @@ class BigInstallController extends Controller
         return DB::table($store_has_users)->insert([
             'store_id' => $store_id,
             'user_id' => $user_id,
+            'created_at' => now(),
+            'updated_at' => now(),
         ]);
     }
 
