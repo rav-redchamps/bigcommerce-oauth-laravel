@@ -47,11 +47,7 @@ class BigCommerceAuth
      */
     private function getRedirectURL(): string
     {
-        $redirect_url = Config::get('bigcommerce-auth.redirect_url');
-        if (!$redirect_url) {
-            throw new Exception('BC_REDIRECT_URL is not set. Please set redirect url.');
-        }
-        return $redirect_url;
+        return route('bigcommerce-install');
     }
 
     /**
