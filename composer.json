@@ -14,7 +14,15 @@
             "role": "Developer"
         }
     ],
-    "require": {},
+    "require": {
+        "ext-json": "*",
+        "spatie/laravel-package-tools": "*",
+        "illuminate/database": "*",
+        "illuminate/http": "*",
+        "illuminate/routing": "*",
+        "illuminate/support": "*",
+        "doctrine/dbal": "*"
+    },
     "autoload": {
         "psr-4": {
             "CronixWeb\\BigCommerceAuth\\": "src/"
