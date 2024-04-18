@@ -27,6 +27,8 @@ return new class extends Migration
             $table->boolean('storefronts_active')->default(false);
             $table->boolean('stencil_enabled')->default(true);
             $table->longText('raw_information')->nullable();
+            $table->string('app_plan')->nullable();
+            $table->enum('app_plan_status', ['trial', 'active', 'inactive'])->default('trial');
         });
     }
 

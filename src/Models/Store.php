@@ -24,7 +24,9 @@ class Store extends Model
         'stencil_enabled',
         'multi_storefront_enabled',
         'storefronts_active',
-        'raw_information'
+        'raw_information',
+        'app_plan',
+        'app_plan_status'
     ];
 
     public function getTable()
