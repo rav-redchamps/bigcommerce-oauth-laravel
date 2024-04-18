@@ -10,7 +10,6 @@ class Store extends Model
     protected $fillable = [
         'hash',
         'access_token',
-        'account_uuid',
         'domain',
         'status',
         'admin_email',
