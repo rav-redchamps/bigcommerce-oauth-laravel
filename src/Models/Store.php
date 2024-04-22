@@ -37,6 +37,6 @@ class Store extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, Config::get('bigcommerce-auth.tables.store_has_users', 'store_has_users'));
     }
 }
