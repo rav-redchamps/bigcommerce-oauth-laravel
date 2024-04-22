@@ -2,7 +2,6 @@
 
 namespace CronixWeb\BigCommerceAuth\Http\Controllers;
 
-use CronixWeb\BigCommerceAuth\Events\PostInstall;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -65,7 +64,6 @@ class BigInstallController extends Controller
         if ($response) {
             $user = $this->saveUserIfNotExist($response['user']['email']);
             $store = $this->saveStoreIfNotExist($response['context'], $response['access_token']);
-            event(new PostInstall($response));
             if (isset($user->id) && isset($store->id)) {
                 if ($this->assignUserToStore($user->id, $store->id)) {
                     Auth::login($user);
