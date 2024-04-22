@@ -14,11 +14,7 @@ class BigUninstallController extends Controller
 
         $validatedSignedPayload = $this->verifySignedPayload($request);
 
-        $uninstallCallback = BigCommerceAuth::getUninstallStoreCallBack();
-
-        if ($validatedSignedPayload && $uninstallCallback) {
-            $uninstallCallback();
-        }
+        $this->removeStoreData($validatedSignedPayload);
     }
 
     protected function removeStoreData($signedPayload)
