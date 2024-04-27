@@ -27,7 +27,8 @@ class Store extends Model
         'storefronts_active',
         'raw_information',
         'app_plan',
-        'app_plan_status'
+        'app_plan_status',
+        'deleted_at'
     ];
 
     public function getTable()
