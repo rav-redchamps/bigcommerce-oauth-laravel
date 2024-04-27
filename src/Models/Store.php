@@ -31,6 +31,18 @@ class Store extends Model
         'deleted_at'
     ];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'raw_information' => 'array',
+        ];
+    }
+
     public function getTable()
     {
         return Config::get('bigcommerce-auth.tables.stores', parent::getTable());
